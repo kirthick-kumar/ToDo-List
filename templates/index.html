@@ -1,0 +1,25 @@
+{% extends 'header.html' %}
+{% block content %}
+<body>
+<div class="px-4 pt-5 mt-5 text-center">
+  <h1 class="display-4 fw-bold mt-5 mb-3">Listify</h1>
+  <div class="col-lg-6 mx-auto">
+    <p class="lead mb-5">Listify is an intuitive, user-friendly website designed to streamline the process of creating, managing, and organizing your to-do lists. It aids you to stay on top of your tasks, ensuring that you never miss a deadline or forget an important appointment again.</p>
+    <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
+      {% if not current_user.is_authenticated: %}
+        <a type="button" class="btn btn-outline-dark btn-lg ms-3 px-4 me-sm-3" href="{{ url_for('login') }}">Login</a>
+        <a type="button" class="btn btn-outline-light btn-lg px-4" style="background-color: #ec3c36" href="{{ url_for('signup') }}">SignUp</a>
+      {% else: %}
+        <a type="button" class="btn btn-outline-light btn-lg px-4" style="background-color: #ec3c36" href="{{ url_for('list_page') }}">View Lists</a>
+      {% endif %}
+    </div>
+  </div>
+  <div class="overflow-hidden border-bottom border-danger ms-2" style="max-height: 30vh;">
+    <div class="container px-5">
+      <img src="static/assets/images/center.png" class="img-fluid mb-4" alt="Example image" width="700" height="700" loading="lazy">
+    </div>
+  </div>
+</div>
+</body>
+{% include 'footer.html' %}
+{% endblock %}

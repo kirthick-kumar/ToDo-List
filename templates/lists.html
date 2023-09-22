@@ -1,0 +1,57 @@
+{% extends 'header.html' %}
+{% block content %}
+<div class="container pt-5 my-5">
+  <div class="px-5 mb-4 rounded-3">
+    <div class="container-fluid">
+      <h2 class="fw-bold">Add To-Do Lists:</h2>
+    </div>
+    <form id="addListForm" data-sb-form-api-token="API_TOKEN" action="{{ url_for('list_page') }}" method="post">
+      <div class="form-control">
+        <label for="new_list" class="h5 my-2">List Name:</label>
+        <input type="text" class="form-control" name="new_list" id="new_list">
+        <button class="btn btn-outline-light my-3" name="add" type="submit" style="background-color: #ec3c36">Add List</button>
+      </div>
+
+      <div class="container-fluid mt-3">
+        <h2 class="fw-bold">{{ current_user.username }}'s To-Do Lists:</h2>
+      </div>
+      {% for i in range(lists|length) %}
+      <a href="{{ url_for('task', id=lists[i].id) }}" style="color: #{{ color[i % 2] }}">
+      <div class="col mt-4">
+        <div class="card card-cover h-100 overflow-hidden text-white rounded-5 shadow-lg" style="background-color: #{{ color[i % 2] }}">
+          <div class="d-flex flex-column h-100 px-5 pb-3 text-white text-shadow-1">
+            <h2 class="pt-5 mt-2 mb-4 display-6 lh-1 fw-bold">{{ lists[i].list_name }}</h2>
+            <ul class="d-flex list-unstyled mt-auto">
+              <li class="me-auto">
+                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-journal-check" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd" d="M10.854 6.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 8.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
+                  <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
+                  <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/>
+                </svg>
+              </li>
+              <li class="d-flex align-items-center me-3">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+                  <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z"/>
+                </svg>
+                <small class="ms-1">{{ lists[i].author.username }}</small>
+              </li>
+              <li class="d-flex align-items-center">
+                <small class="ms-2">{{ lists[i].time }}</small>
+              </li>
+              <li class="d-flex align-items-center">
+                <button class="ms-4 btn btn-sm pb-2" name="delete" value="{{lists[i].id}}" style="background-color: #{{ color[(i % 2)-1] }}; color: #{{ color[i % 2] }}">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                    <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+                  </svg>
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      </a>
+      {% endfor %}
+    </form>
+  </div>
+</div>
+{% endblock %}

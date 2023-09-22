@@ -1,0 +1,37 @@
+{% extends 'header.html' %}
+{% block content %}
+<div class="container pt-5 mt-5">
+  <div class="px-5 mb-4 rounded-3">
+    <div class="container-fluid">
+      <h2 class="fw-bold">Your Tasks for {{ todo_list.list_name }}:</h2>
+      <div class="list-group">
+        <form id="taskForm" data-sb-form-api-token="API_TOKEN" action="{{ url_for('task', id=todo_list.id) }}" method="post">
+          {% for i in range(task_list|length): %}
+            {% if i % 2 == 0: %}
+              <label class="list-group-item d-flex gap-3">
+                <input class="form-check-input flex-shrink-0 bg-dark" name="check{{i}}" onchange="this.form.submit()" type="checkbox" style="font-size: 1.375em; border-color: #212529" {{ task_list[i] }}>
+                <span class="pt-1 form-checked-content flex-grow-1">
+                  <strong>{{ task_list[i+1] }}</strong>
+                  <small class="d-block text-muted">{{ todo_list.list_name }}</small>
+                </span>
+                <button class="btn btn-outline-light ms-5 px-3 btn-sm" name="delete" value="{{i}}" type="submit" style="background-color: #ec3c36">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                    <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+                  </svg>
+                </button>
+              </label>
+            {% endif %}
+          {% endfor %}
+          <a class="btn btn-dark my-3" type="button" href="/lists">Back</a>
+          <p class="h4 mt-5">Add Task:</p>
+          <div class="form-control">
+            <label for="new_task" class="h5 my-2">Task Name:</label>
+            <input type="text" class="form-control" name="new_task" id="new_task">
+            <button class="btn btn-outline-light my-3" name="add" type="submit" style="background-color: #ec3c36">Add Task</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
